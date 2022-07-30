@@ -44,11 +44,10 @@ get_transfers <- function(url) {
 # voetbal.com/teams/feynoord website
 # and returns all the made transfers 
 scrape_all_transfer_years <- function(
-    url = "https://www.voetbal.com/teams/feyenoord/2016/6/"
+    url = "https://www.voetbal.com/teams/feyenoord/2016/6/",
+    club_name = "feyenoord"
   ){
   
-  # specify the name of the club
-  club_name <- "feyenoord"
   html_doc <- rvest::read_html(url)
 
   # from the website collect all 
@@ -70,7 +69,12 @@ scrape_all_transfer_years <- function(
 
 
 # use the main function to scrape all data from the url:
-data <- scrape_all_transfer_years(url = "https://www.voetbal.com/teams/feyenoord/2016/6/")
+# clubname must be in line with the name in url
+# will automate that soon
+data <- scrape_all_transfer_years(
+  url = "https://www.voetbal.com/teams/feyenoord/2016/6/",
+  club_name = "feynoord"
+)
 
 # the data is a list of dataset
 # e.g. to get the latest data (2024)
@@ -78,3 +82,17 @@ data[110]
 
 # to get data from 2023, etc.
 data[109]
+
+# or from another team:
+data_ajax <- scrape_all_transfer_years(
+  url = "https://www.voetbal.com/teams/afc-ajax/2023/6/",
+  club_name = "afc-ajax"
+)
+
+# latest data
+data_ajax[119]
+
+# noteice that there arent transfers in 2024
+data_ajax[120]
+
+# other data must be scrapable in similar fashion
