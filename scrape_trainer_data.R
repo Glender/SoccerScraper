@@ -1,5 +1,6 @@
 library(rvest)
 library(lubridate)
+library(tibble)
 
 
 # get all trainer data from a voetbal.com url
