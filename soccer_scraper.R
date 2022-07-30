@@ -40,18 +40,37 @@ get_transfers <- function(url) {
 }
 
 
+# this function extracts the clubname from a url
+# e.g. its get 'feyenoord' from 'https://www.voetbal.com/teams/feyenoord/2016/6/'
+find_clubname_in_url <- function(url) {
+  
+  # find all  '/' chars in your url
+  # it is assumed that the club name
+  # is located between the 4th and 5th '/'
+  lookup <- stringr::str_locate_all(url, "/")[[1]]
+  start_end <- lookup[c(4,5), 1]
+  
+  # extract clubname
+  club_name <- str_sub(url, 
+          start = start_end[1] + 1, 
+          end = start_end[2] - 1
+  )
+  return(club_name)
+}
+
+
 # function below finds all scrapable years from the 
 # voetbal.com/teams/feynoord website
 # and returns all the made transfers 
 scrape_all_transfer_years <- function(
-    url = "https://www.voetbal.com/teams/feyenoord/2016/6/",
-    club_name = "feyenoord"
+  url = "https://www.voetbal.com/teams/feyenoord/2016/6/"
   ){
   
   html_doc <- rvest::read_html(url)
 
   # from the website collect all 
   range_years <- find_scrapable_years(html_doc)
+  club_name <- find_clubname_in_url(url)
   
   # make vector of all urls
   urls <- sprintf(
@@ -69,11 +88,10 @@ scrape_all_transfer_years <- function(
 
 
 # use the main function to scrape all data from the url:
-# clubname must be in line with the name in url
-# will automate that soon
+# the function will find all scrapeable years
+# and returns all transfer results from the years
 data_feynoord <- scrape_all_transfer_years(
-  url = "https://www.voetbal.com/teams/feyenoord/2016/6/",
-  club_name = "feynoord"
+  url = "https://www.voetbal.com/teams/feyenoord/2016/6/"
 )
 
 # the data is a list of dataset
@@ -85,14 +103,13 @@ data_feynoord[109]
 
 # or from another team:
 data_ajax <- scrape_all_transfer_years(
-  url = "https://www.voetbal.com/teams/afc-ajax/2023/6/",
-  club_name = "afc-ajax"
+  url = "https://www.voetbal.com/teams/afc-ajax/2023/6/"
 )
 
-# latest data
+# examine the latest data
 data_ajax[119]
 
-# noteice that there arent transfers in 2024
+# notice that there aren't transfers in 2024
 data_ajax[120]
 
-# other data must be scrapable in similar fashion
+# other data from different teams should be collectable in similar fashion
