@@ -23,7 +23,7 @@ find_scrapable_years <- function(html_doc) {
 }
 
 
-# function that scraped the transfer table from a url 
+# function that scrapes the transfer table from a url 
 get_transfers <- function(url) {
   
   # parse the scraped html document
@@ -32,7 +32,7 @@ get_transfers <- function(url) {
   # extract all tables from the html file
   data <- rvest::html_elements(html_doc, "table") %>%
     rvest::html_table() %>%
-    .[[2]] # we are only interested by the 2nd table
+    .[[2]] # we are only interested in the 2nd table
   
   cat("Scraped the website", url, "\n")
   
@@ -51,7 +51,7 @@ find_clubname_in_url <- function(url) {
   start_end <- lookup[c(4,5), 1]
   
   # extract clubname
-  club_name <- str_sub(url, 
+  club_name <- stringr::str_sub(url, 
           start = start_end[1] + 1, 
           end = start_end[2] - 1
   )
