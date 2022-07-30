@@ -61,27 +61,20 @@ scrape_all_transfer_years <- function(
     range_years
   )
   
-  # 
+  # extract all transfer data from each url
+  # the result is a list of dataframes
   data_list <- lapply(urls, get_transfers)
 
   return(data_list)
 }
 
 
-# use the function
-data <- scrape_all_transfer_years()
+# use the main function to scrape all data from the url:
+data <- scrape_all_transfer_years(url = "https://www.voetbal.com/teams/feyenoord/2016/6/")
 
-# 
+# the data is a list of dataset
+# e.g. to get the latest data (2024)
 data[110]
 
-
-
-
-
-
-
-
-
-
-
-
+# to get data from 2023, etc.
+data[109]
