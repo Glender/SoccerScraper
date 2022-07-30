@@ -51,10 +51,12 @@ find_clubname_in_url <- function(url) {
   start_end <- lookup[c(4,5), 1]
   
   # extract clubname
-  club_name <- stringr::str_sub(url, 
-          start = start_end[1] + 1, 
-          end = start_end[2] - 1
+  club_name <- stringr::str_sub(
+    url, 
+    start = start_end[1] + 1, 
+    end = start_end[2] - 1
   )
+  
   return(club_name)
 }
 
@@ -62,9 +64,7 @@ find_clubname_in_url <- function(url) {
 # function below finds all scrapable years from the 
 # voetbal.com/teams/feynoord website
 # and returns all the made transfers 
-scrape_all_transfer_years <- function(
-  url = "https://www.voetbal.com/teams/feyenoord/2016/6/"
-  ){
+scrape_all_transfer_years <- function(url){
   
   html_doc <- rvest::read_html(url)
 
