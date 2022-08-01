@@ -102,7 +102,7 @@ data_feynoord[110]
 data_feynoord[109]
 
 # or from another team:
-data_ajax <- scrape_all_transfer_years(
+data <- x <- scrape_all_transfer_years(
   url = "https://www.voetbal.com/teams/afc-ajax/2023/6/"
 )
 

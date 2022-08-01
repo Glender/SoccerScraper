@@ -3,6 +3,28 @@ library(lubridate)
 library(tibble)
 library(readr)
 
+
+# this function extracts the clubname from a url
+# e.g. its get 'feyenoord' from 'https://www.voetbal.com/teams/feyenoord/2016/6/'
+find_clubname_in_url <- function(url) {
+  
+  # find all  '/' chars in your url
+  # it is assumed that the club name
+  # is located between the 4th and 5th '/'
+  lookup <- stringr::str_locate_all(url, "/")[[1]]
+  start_end <- lookup[c(4,5), 1]
+  
+  # extract clubname
+  club_name <- stringr::str_sub(
+    url, 
+    start = start_end[1] + 1, 
+    end = start_end[2] - 1
+  )
+  
+  return(club_name)
+}
+
+
 # get all trainer data from a voetbal.com url
 # assure the data is in the correct format
 scrape_trainer_data <- function(url){
